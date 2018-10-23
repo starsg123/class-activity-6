@@ -1,0 +1,63 @@
+---
+title: 'HUDK4050: Class Activity 6'
+author: "Charles Lang"
+date: "10/23/2018"
+output: html_document
+---
+# Data Management
+```{r}
+#Load data
+DF1 <- read.csv("cluster.csv", header = TRUE)
+  
+#Wrangle data
+DF1 <- DF1[3,]  
+```
+
+# Find lattitudes & longitudes for cities
+```{r}
+install.packages("ggmap")
+library(ggmap)
+
+#Request lattitude and longitude from Google Maps API
+DF2 <- geocode(as.character(DF1$Q1_1), output = "latlon", source = "dsk")
+```
+
+Now we will run the K-means clustering algorithm we talked about in class. 
+1) The algorithm starts by randomly choosing some starting values 
+2) Associates all observations near to those values with them
+3) Calculates the mean of those clusters of values
+4) Selects the observation closest to the mean of the cluster
+5) Re-associates all observations closest to this observation
+6) Continues this process until the clusters are no longer changing
+
+Notice that in this case we have 5 variables and in class we only had 2. It is impossible to vizualise this process with 5 variables.
+
+Also, we need to choose the number of clusters we think are in the data. We will start with 4.
+
+```{r}
+
+fit <- kmeans(LL, 1) 
+
+#We have created an object called "fit" that contains all the details of our clustering including which observations belong to each cluster.
+
+#We can access the list of clusters by typing "fit$cluster", the top row corresponds to the original order the rows were in. Notice we have deleted some rows.
+
+fit$cluster
+
+#We can also attach these clusters to te original dataframe by using the "data.frame" command to create a new data frame called K4.
+
+DF3 <- data.frame(LL, fit$cluster)
+
+#Have a look at the K4 dataframe. Lets change the names of the variables to make it more convenient with the names() command.
+
+names(DF3) <- c("1", "2", "3", "4", "5", "cluster") #c() stands for concatonate and it creates a vector of anything, in this case a vector of names.
+
+```
+
+# Visualize your clusters in ggplot
+```{r}
+#Create a scatterplot that plots location of each student and colors the points according to their cluster 
+```
+
+# Can you group students according to their weekly activities?
+
