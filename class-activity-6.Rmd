@@ -10,11 +10,16 @@ output: html_document
 DF1 <- read.csv("HUDK405019-clustering.csv", header = TRUE)
 
 #Convert the index numbers of the data fram into the student names.
-  
+library("tidyverse")
+DF1 <- unite(DF1, First.Name, Last.Name, col = "Name", sep = " ")
+DF2 <- DF1[,-1]
+rownames(DF2) <- DF1[,1]
 #Wrangle data using dplyr to include only the numerical values.
-
+library("dplyr")
+DF2 <- DF2[-c(10, 22, 25, 35, 44),] %>% select(1:11)
+DF2 <- as.matrix(DF2)
+class(DF2) <- "numeric"
 #Scale the data so that no variable has undue influence
-
 DF2 <- scale(DF2)
  
 ```
