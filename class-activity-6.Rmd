@@ -7,7 +7,7 @@ output: html_document
 # Data Management
 ```{r}
 #Load data
-DF1 <- read.csv("HUDK405019-cluster.csv", header = TRUE)
+DF1 <- read.csv("HUDK405019-clustering.csv", header = TRUE)
 
 #Convert the index numbers of the data fram into the student names.
   
